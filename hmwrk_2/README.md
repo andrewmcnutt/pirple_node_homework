@@ -20,10 +20,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 6. When an order is placed, you should email the user a receipt. You should integrate with the sandbox of Mailgun.com for this. Note: Every Mailgun account comes with a sandbox email account domain (whatever@sandbox123.mailgun.org) that you can send from by default. So, there's no need to setup any DNS for your domain for this task https://documentation.mailgun.com/en/latest/faqs.html#how-do-i-pick-a-domain-name-for-my-mailgun-account
 
-```
-Give examples
-```
-
 ### Installing
 After downloading the repo please run the code below to add the necessary subfolders. After that you will need to create a .env file that will contain the api keys for Stripe & Mailgun as well as the domain name for Mailgun. 
 
