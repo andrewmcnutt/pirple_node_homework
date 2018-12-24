@@ -1,0 +1,17 @@
+{
+	"pizza": {
+		"small": "small",
+		"medium": "medium",
+		"large": "large"
+	},
+	"toppings": {
+		"pepperoni": "pepperoni",
+		"pineapple": "pineapple",
+		"meatballs": "meatballs"
+	},
+	"drink": {
+		"soda": "soda",
+		"tea": "tea",
+		"lemonade": "lemonade"
+	}
+}

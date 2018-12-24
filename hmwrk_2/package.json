@@ -1,0 +1,19 @@
+{
+  "name": "homework_assignment_2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "stripe": "^6.17.0"
+  },
+  "devDependencies": {
+    "dotenv": "^6.1.0",
+    "mailgun-js": "^0.22.0",
+    "stripe": "^6.17.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
