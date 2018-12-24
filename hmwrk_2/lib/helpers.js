@@ -1,4 +1,5 @@
 // Dependencies
+const mailgunJS = require('mailgun-js')
 let crypto = require("crypto");
 let config = require("./config");
 let https = require("https");
@@ -81,15 +82,20 @@ helpers.booleanIsTrue = function(property) {
 
 // Email the user a receipt
 helpers.emailReceipt = function(data) {
-  var data = {
-    from: 'Excited User <me@samples.mailgun.org>',
-    to: 'serobnic@mail.ru',
-    subject: 'Hello',
-    text: 'Testing some Mailgun awesomeness!'
-  };
+  mailgun = mailgunJS({
+    apiKey: process.env.MAILGUN_API_KEY,
+    domain: process.env.MAILGUN_DOMAIN
+  });
 
-  mailgun.messages().send(data, function (error, body) {
-    console.log(body);
+  return new Promise(async function(resolve, reject){
+    try {
+      await mailgun.messages().send(data);
+    } catch(error) {
+      reject("Could not send the user a receipt");
+      return;
+    }
+
+    resolve("Emailed receipt to customer");
   });
 }
 

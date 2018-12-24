@@ -12,7 +12,8 @@
     "stripe": "^6.17.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create-data-subfolders": "mkdir .data/users && mkdir .data/tokens && mkdir .data/cart"
   },
   "author": "",
   "license": "ISC"

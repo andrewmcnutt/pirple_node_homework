@@ -20,7 +20,7 @@ tokens.post = async function(data, callback) {
 
   // Vars we will use when we try to create a new token
   const tokenId = helpers.createRandomString(20);
-  const expires = Date.now() + 1000 * 60 * 60 * 60;
+  const expires = Date.now() + 1000 * 60 * 60;
   const tokenObject = {
     id: tokenId,
     expires
@@ -125,8 +125,7 @@ tokens.put = async function(data, callback) {
   }
 
   // Set the expiration an hour from now
-  // TODO change back to hour instead of 60 days
-  token.expires = Date.now() + 1000 * 60 * 60 * 60;
+  token.expires = Date.now() + 1000 * 60 * 60;
 
 
   // Store the new updates

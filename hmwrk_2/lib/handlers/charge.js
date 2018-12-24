@@ -125,10 +125,22 @@ charge.post = async function(data, callback) {
     return;
   }
 
+  var emailData = {
+    from: 'Bob Belcher <bobsburgers@burger.org>',
+    to: userData.email,
+    subject: 'Receipt for order from: You want a pizza this?!',
+    text: `Your pizza is on the way! The total for your order was $${itemCount}.00.`
+  };
+
+  try {
+    await helpers.emailReceipt(emailData);
+  } catch(error) {
+    callback(400, { Error: error });
+    return;
+  }
 
   callback(200);
 };
-
 
 // Export the charge sub methods
 module.exports = charge;
