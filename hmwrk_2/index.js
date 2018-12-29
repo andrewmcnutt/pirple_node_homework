@@ -5,7 +5,7 @@
 
 // Dependencies
 const server = require("./lib/server");
-require('dotenv').config()
+require("dotenv").config();
 // var workers = require("./lib/workers");
 
 // Declare the app
@@ -13,12 +13,11 @@ const app = {};
 
 // Init function
 app.init = function() {
-  // Start the server
-  server.init();
+    // Start the server
+    server.init();
 
-  // Start the workers
-  // workers.init();
-
+    // Start the workers
+    // workers.init();
 };
 
 // Execute
