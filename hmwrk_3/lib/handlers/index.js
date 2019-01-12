@@ -1,6 +1,9 @@
 // Dependencies
 // HTML
 const homeSubmethods = require("./home");
+const accountCreateSubmethods = require("./accountCreate");
+const sessionCreateSubmethods = require("./sessionCreate");
+const sessionDeletedSubmethods = require("./sessionDeleted");
 const commonSubmethods = require("./common");
 
 //API
@@ -37,6 +40,36 @@ handlers.home = function(data, callback) {
     // Reject any request that isn't a GET
     if (data.method == "get") {
         homeSubmethods[data.method](data, callback);
+    } else {
+        callback(405, undefined, "html");
+    }
+};
+
+// AccountCreate handler
+handlers.accountCreate = function(data, callback) {
+    // Reject any request that isn't a GET
+    if (data.method == "get") {
+        accountCreateSubmethods[data.method](data, callback);
+    } else {
+        callback(405, undefined, "html");
+    }
+};
+
+// SessionCreate handler
+handlers.sessionCreate = function(data, callback) {
+    // Reject any request that isn't a GET
+    if (data.method == "get") {
+        sessionCreateSubmethods[data.method](data, callback);
+    } else {
+        callback(405, undefined, "html");
+    }
+};
+
+// sessionDeleted handler
+handlers.sessionDeleted = function(data, callback) {
+    // Reject any request that isn't a GET
+    if (data.method == "get") {
+        sessionDeletedSubmethods[data.method](data, callback);
     } else {
         callback(405, undefined, "html");
     }

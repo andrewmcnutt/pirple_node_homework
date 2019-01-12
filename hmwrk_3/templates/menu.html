@@ -1,0 +1,36 @@
+<h1>Buy some food!</h1>
+
+<div class="formWrapper">
+  <form id="menu" action="/api/cart" method="POST">
+    <div class="formError"></div>
+    <h1>Pizza Size</h1>
+    <div class="inputWrapper">
+      <input type="radio" name="pizza" value="small">Small<br>
+      <input type="radio" name="pizza" value="medium" checked="checked">Medium<br>
+      <input type="radio" name="pizza" value="large">Large<br>
+    </div>
+    <h1>Toppings</h1>
+    <div class="inputWrapper">
+      <input type="checkbox" name="pepperoni" value="pepperoni">Pepperoni
+    </div>
+    <div class="inputWrapper">
+      <input type="checkbox" name="pineapple" value="pineapple">Pineapple
+    </div>
+    <div class="inputWrapper">
+      <input type="checkbox" name="meatballs" value="meatballs">Meatballs
+    </div>
+    <h1>Drink</h1>
+    <div class="inputWrapper">
+      <input type="checkbox" name="soda" value="soda">Soda
+    </div>
+    <div class="inputWrapper">
+      <input type="checkbox" name="tea" value="tea">Tea
+    </div>
+    <div class="inputWrapper">
+      <input type="checkbox" name="lemonade" value="lemonade">Lemonade
+    </div>
+    <div class="inputWrapper ctaWrapper">
+      <button id="feedmeButton" type="submit" class="cta blue">Feed Me!</button>
+    </div>
+  </form>
+</div>

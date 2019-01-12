@@ -9,17 +9,17 @@ const handlers = require("./handlers/");
 // Define a request router
 const router = {
     "" : handlers.home,
-    "signup" : handlers.signup,
+    "account/create" : handlers.accountCreate,
     // "food" : handlers.food,
     // "order" : handlers.order,
     //
     "session/create" : handlers.sessionCreate,
-    // "session/deleted" : handlers.sessionDeleted,
+    "session/deleted" : handlers.sessionDeleted,
 
     ping: handlers.ping,
     "api/users": handlers.users,
     "api/tokens": handlers.tokens,
-    "api/menu": handlers.menu,
+    "menu": handlers.menu,
     "api/cart": handlers.cart,
     "api/charge": handlers.charge,
 
