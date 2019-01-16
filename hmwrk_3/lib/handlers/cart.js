@@ -24,7 +24,7 @@ cart.post = async function(data, callback) {
     const toppings = helpers.stringLengthGreaterThanZero(data.payload.toppings);
     const drink = helpers.stringLengthGreaterThanZero(data.payload.drink);
     const updateProperties = [pizza, toppings, drink];
-    console.log('CART POST', updateProperties);
+
     // Vars we will use when we try to create a cart
     let token;
     let verifiedToken;

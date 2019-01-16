@@ -133,17 +133,39 @@ app.processCart = async function(path, method, payload) {
         function(statusCode) {
             // Display an error on the form if needed
             if (statusCode == 200) {
-                console.log("CART FOUND");
+                // A cart already exists. We will update it.
+                app.processCartRequest(path, "PUT", payload);
                 return;
             } else {
-                app.processNewCart(path, method, payload);
+                // No cart exists for the user so we will create a new one.
+                app.processCartRequest(path, "POST", payload);
                 return;
             }
         }
     );
 };
 
-app.processNewCart = async function(path, method, payload) {
+app.processCartRequest = async function(path, method, payload) {
+    app.client.request(
+        {
+            token: app.config.sessionToken.id
+        },
+        "api/cart",
+        method,
+        undefined,
+        this.processCartPayload(payload),
+        function(statusCode) {
+            // Display an error on the form if needed
+            if (statusCode == 200) {
+                console.log("CART CREATED");
+            } else {
+                console.log("CART NOT CREATED");
+            }
+        }
+    );
+};
+
+app.processCartPayload = function(payload) {
     let pepperoni = payload.pepperoni ? "pepperoni" : "";
     let pineapple = payload.pineapple ? "pineapple" : "";
     let meatballs = payload.meatballs ? "meatballs" : "";
@@ -184,35 +206,16 @@ app.processNewCart = async function(path, method, payload) {
         drinks = drinks.substring(0, drinks.length - 2);
     }
 
-    let cartpayload = {
+    return {
         phone: app.config.sessionToken.phone,
         pizza: payload.pizza,
         toppings,
         drink: drinks
     };
-
-    app.client.request(
-        {
-            token: app.config.sessionToken.id
-        },
-        "api/cart",
-        "POST",
-        undefined,
-        cartpayload,
-        function(statusCode) {
-            // Display an error on the form if needed
-            if (statusCode == 200) {
-                console.log('CART CREATED');
-            } else {
-                console.log('CART NOT CREATED');
-            }
-        }
-    );
 };
 
 // Bind the logout button
 app.bindLogoutButton = function() {
-    console.log("LOGGING OUT");
     document
         .getElementById("logoutButton")
         .addEventListener("click", function(e) {
@@ -236,7 +239,7 @@ app.logUserOut = function() {
     var queryStringObject = {
         id: tokenId
     };
-    console.log("CALLING CLIENT");
+
     app.client.request(
         undefined,
         "api/tokens",
@@ -272,16 +275,23 @@ app.bindForms = function() {
             var elements = this.elements;
             for (var i = 0; i < elements.length; i++) {
                 if (elements[i].type !== "submit") {
-                    var valueOfElement =
-                        elements[i].type == "checkbox"
-                            ? elements[i].checked
-                            : elements[i].value;
+                    var valueOfElement;
+
+                    if (elements[i].type == "checkbox") {
+                        valueOfElement = elements[i].checked;
+                    }
+
+                    if (elements[i].type == "radio" && elements[i].checked) {
+                        valueOfElement = elements[i].value;
+                    }
+
+                    if (elements[i].type != "radio" && elements[i].type != "checkbox") {
+                        valueOfElement = elements[i].value;
+                    }
+
                     payload[elements[i].name] = valueOfElement;
                 }
             }
-
-            console.log("BIND FORMS PAYLOAD", payload);
-            console.log("BIND FORMS PAYLOAD path", path);
 
             if (path.indexOf("api/cart") != -1) {
                 app.processCart(path, method, payload);
@@ -334,7 +344,6 @@ app.bindForms = function() {
 
 // Form response processor
 app.formResponseProcessor = function(formId, requestPayload, responsePayload) {
-    console.log("REQUEST PAYLOAD", requestPayload);
     var functionToCall = false;
     // If account creation was successful, try to immediately log the user in
     if (formId == "accountCreate") {
