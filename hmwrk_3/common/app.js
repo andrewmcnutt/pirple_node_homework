@@ -154,12 +154,24 @@ app.processCartRequest = async function(path, method, payload) {
         method,
         undefined,
         this.processCartPayload(payload),
-        function(statusCode) {
+        function(statusCode, responsePayload) {
             // Display an error on the form if needed
             if (statusCode == 200) {
-                console.log("CART CREATED");
+                // Send the user to the checkout page
+                window.location = "/session/checkout";
             } else {
-                console.log("CART NOT CREATED");
+                // Try to get the error from the api, or set a default error message
+                var error =
+                    typeof responsePayload.Error == "string"
+                        ? responsePayload.Error
+                        : "An error has occured, please try again";
+
+                // Set the formError field with the error text
+                document.querySelector("#menu .formError").innerHTML = error;
+
+                // Show (unhide) the form error field on the form
+                document.querySelector("#menu .formError").style.display =
+                    "block";
             }
         }
     );
@@ -285,7 +297,10 @@ app.bindForms = function() {
                         valueOfElement = elements[i].value;
                     }
 
-                    if (elements[i].type != "radio" && elements[i].type != "checkbox") {
+                    if (
+                        elements[i].type != "radio" &&
+                        elements[i].type != "checkbox"
+                    ) {
                         valueOfElement = elements[i].value;
                     }
 
@@ -491,6 +506,11 @@ app.tokenRenewalLoop = function() {
     }, 1000 * 60);
 };
 
+// Get the necessary info for the cart page
+app.checkout = function() {
+  console.log('LOCAL STORAGE', localStorage.getItem("token"));
+}
+
 // Init (bootstrapping)
 app.init = function() {
     // Bind all form submissions
@@ -499,13 +519,14 @@ app.init = function() {
     // Bind logout logout button
     app.bindLogoutButton();
 
-    // app.bindFeedMeButton();
-
     // Get the token from localstorage
     app.getSessionToken();
 
     // Renew token
     app.tokenRenewalLoop();
+
+    // Get the info for the checkout page
+    app.checkout();
 };
 
 // Call the init processes after the window loads

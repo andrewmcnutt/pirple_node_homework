@@ -10,19 +10,15 @@ const handlers = require("./handlers/");
 const router = {
     "" : handlers.home,
     "account/create" : handlers.accountCreate,
-    // "food" : handlers.food,
-    // "order" : handlers.order,
-    //
     "session/create" : handlers.sessionCreate,
     "session/deleted" : handlers.sessionDeleted,
-
+    "session/checkout": handlers.sessionCheckout,
     ping: handlers.ping,
+    "session/menu": handlers.menu,
     "api/users": handlers.users,
     "api/tokens": handlers.tokens,
-    "menu": handlers.menu,
     "api/cart": handlers.cart,
     "api/charge": handlers.charge,
-
     "public" : handlers.common
 };
 

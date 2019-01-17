@@ -2,6 +2,7 @@
 // HTML
 const homeSubmethods = require("./home");
 const accountCreateSubmethods = require("./accountCreate");
+const sessionCheckoutSubmethods = require("./sessionCheckout");
 const sessionCreateSubmethods = require("./sessionCreate");
 const sessionDeletedSubmethods = require("./sessionDeleted");
 const commonSubmethods = require("./common");
@@ -50,6 +51,16 @@ handlers.accountCreate = function(data, callback) {
     // Reject any request that isn't a GET
     if (data.method == "get") {
         accountCreateSubmethods[data.method](data, callback);
+    } else {
+        callback(405, undefined, "html");
+    }
+};
+
+// SessionCheckout handler
+handlers.sessionCheckout = function(data, callback) {
+    // Reject any request that isn't a GET
+    if (data.method == "get") {
+        sessionCheckoutSubmethods[data.method](data, callback);
     } else {
         callback(405, undefined, "html");
     }

@@ -1,0 +1,15 @@
+<h1>Pizza pie via pizza pay!</h1>
+
+<div class="formWrapper">
+  <form id="menu" action="/api/charge" method="POST">
+    <div class="formError"></div>
+    <h1>Your current total is</h1>
+    <div class="inputWrapper">
+      <div class="inputLabel">Please enter a credit card.</div>
+      <input type="text" id="charge_cc" name="charge_cc" required minlength="16" maxlength="16">
+    </div>
+    <div class="inputWrapper ctaWrapper">
+      <button id="paymeButton" type="submit" class="cta blue">Send Me Food!</button>
+    </div>
+  </form>
+</div>
