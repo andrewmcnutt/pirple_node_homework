@@ -10,8 +10,6 @@ const helpers = require("./../helpers");
 const checkout = {};
 
 checkout.get = function(data, callback) {
-    console.log('CHECKOUT GET');
-    console.log(data);
     // Prepare data for interpolation
     const templateData = {
         "head.title" : "Bob's pizza company",

@@ -27,14 +27,6 @@ app.client.request = function(
     payload,
     callback
 ) {
-    // console.log("***********************************");
-    // console.log("REQUEST");
-    // console.log({ headers });
-    // console.log({ path });
-    // console.log({ method });
-    // console.log({ queryStringObject });
-    // console.log({ payload });
-    // console.log("***********************************");
     // Set defaults
     headers = typeof headers == "object" && headers !== null ? headers : {};
     path = typeof path == "string" ? path : "/";
@@ -106,7 +98,7 @@ app.client.request = function(
 };
 
 // Log the user out then redirect them
-app.processCart = async function(path, method, payload) {
+app.processCart = function(path, method, payload) {
     // Get the current token id
     var tokenId =
         typeof app.config.sessionToken.id == "string"
@@ -145,7 +137,7 @@ app.processCart = async function(path, method, payload) {
     );
 };
 
-app.processCartRequest = async function(path, method, payload) {
+app.processCartRequest = function(path, method, payload) {
     app.client.request(
         {
             token: app.config.sessionToken.id
@@ -224,6 +216,37 @@ app.processCartPayload = function(payload) {
         toppings,
         drink: drinks
     };
+};
+
+// Charge the user for items in their cart
+app.chargeUser = function(path, method, payload) {
+    let token = app.config.sessionToken;
+
+    if (!token || !token.id || !token.phone) {
+        window.location = "/";
+        return;
+    }
+
+    app.client.request(
+        {
+            token: token.id
+        },
+        "api/charge",
+        "POST",
+        undefined,
+        {
+            phone: token.phone
+        },
+        function(statusCode, responsePayload) {
+            document.querySelector("#menu").style.display = "none";
+
+            if (statusCode == 200) {
+                document.querySelector("#chargeSuccess").style.display = "block";
+            } else {
+                document.querySelector("#chargeFailure").style.display = "block";
+            }
+        }
+    );
 };
 
 // Bind the logout button
@@ -310,6 +333,11 @@ app.bindForms = function() {
 
             if (path.indexOf("api/cart") != -1) {
                 app.processCart(path, method, payload);
+                return;
+            }
+
+            if (path.indexOf("api/charge") != -1) {
+                app.chargeUser(path, method, payload);
                 return;
             }
 
@@ -461,7 +489,7 @@ app.renewToken = function(callback) {
             "PUT",
             undefined,
             payload,
-            function(statusCode, responsePayload) {
+            function(statusCode) {
                 // Display an error on the form if needed
                 if (statusCode == 200) {
                     // Get the new token details
@@ -506,10 +534,86 @@ app.tokenRenewalLoop = function() {
     }, 1000 * 60);
 };
 
+// Calculate cart total
+app.cartTotal = function(cartData) {
+    const itemCount = Object.values(cartData)
+        .map(item => {
+            return item !== "" ? item.split(",").length : 0;
+        })
+        .reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+        });
+
+    return itemCount;
+};
+
+// Get a list of the cart items
+app.cartList = function(cartData) {
+    let pizzaItem = "";
+    let toppingsItem = "";
+    let drinksItem = "";
+
+    if (cartData.pizza) {
+        pizzaItem = `You are ordering a ${cartData.pizza} pizza. `;
+    }
+
+    if (cartData.toppings) {
+        toppingsItem = `Your toppings are: ${cartData.toppings}. `;
+    }
+
+    if (cartData.drink) {
+        drinksItem = `Your drinks are: ${cartData.drink}.`;
+    }
+
+    return pizzaItem + toppingsItem + drinksItem;
+};
+
 // Get the necessary info for the cart page
 app.checkout = function() {
-  console.log('LOCAL STORAGE', localStorage.getItem("token"));
-}
+    let token = app.config.sessionToken;
+    let pathname = window.location.pathname;
+
+    if (pathname !== "/session/checkout") {
+        return;
+    }
+
+    // Hide the checkout success and error messages.
+    document.querySelector("#chargeSuccess").style.display = "none";
+    document.querySelector("#chargeFailure").style.display = "none";
+
+    if (!token) {
+        window.location = "/";
+        return;
+    }
+
+    app.client.request(
+        {
+            token: token.id
+        },
+        "api/cart",
+        "GET",
+        {
+            phone: token.phone
+        },
+        undefined,
+        function(statusCode, responsePayload) {
+            if (statusCode == 200) {
+                // We let the user know what the cart total is.
+                let cartTotal = app.cartTotal(responsePayload);
+                document.getElementById(
+                    "cartTotal"
+                ).innerHTML = `Your current total is $${cartTotal}.00`;
+
+                let cartList = app.cartList(responsePayload);
+                document.getElementById("cartList").innerHTML = cartList;
+            } else {
+                // There was an error trying to process the cart so we send
+                // them back to the menu.
+                window.location = "/session/menu";
+            }
+        }
+    );
+};
 
 // Init (bootstrapping)
 app.init = function() {
