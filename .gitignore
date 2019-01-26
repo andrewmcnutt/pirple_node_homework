@@ -39,12 +39,7 @@ ehthumbs.db
 Thumbs.db
 *.pem
 
-hmwrk_2/.env
-hmwrk_2/.data/tokens
-hmwrk_2/.data/users
-hmwrk_2/.data/cart
-
-hmwrk_3/.env
-hmwrk_3/.data/tokens
-hmwrk_3/.data/users
-hmwrk_3/.data/cart
+*/.env
+*/.data/tokens
+*/.data/users
+*/.data/cart

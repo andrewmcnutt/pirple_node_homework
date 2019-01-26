@@ -1,0 +1,13 @@
+<h1>Buy some food!</h1>
+
+<div class="formWrapper">
+  <form id="menu" action="/api/cart" method="POST">
+    <div class="formError"></div>
+    {pizzaHTML}
+    {toppingsHTML}
+    {drinksHTML}
+    <div class="inputWrapper ctaWrapper">
+      <button id="feedmeButton" type="submit" class="cta blue">Feed Me!</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,509 @@
+{
+	"info": {
+		"_postman_id": "",
+		"name": "NMC Homework 22",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\":\"Phil\",\n\t\"lastName\":\"Jackson\",\n\t\"phone\":\"1234567890\",\n\t\"email\":\"phil@hello.com\",\n\t\"streetAddress\":\"123 StreetName Blvd, Your Town, ZZ 00000\",\n\t\"password\":\"thisIsAPasswod\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/users?phone=1234567890",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "1234567890"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a user",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "abcdefghijklmnopqrst",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\":\"1234567890\",\n\t\"email\":\"phil@hello.com\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/users?phone=1234567890",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "1234567890"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "abcdefghijklmnopqrst",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/users?phone=1234567890",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "1234567890"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\":\"Bob\",\n\t\"lastName\":\"Jackson III\",\n\t\"phone\":\"1234567890\",\n\t\"password\":\"thisIsAPasswod\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/tokens",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/tokens?id=abcdefghijklmnopqrst",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tokens"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "abcdefghijklmnopqrst"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a token",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"abcdefghijklmnopqrst\",\n\t\"extend\":true\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/tokens",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a token",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/tokens?id=abcdefghijklmnopqrst",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tokens"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "abcdefghijklmnopqrst"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the menu",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "abcdefghijklmnopqrst",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/menu?phone=1234567890",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"menu"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "1234567890"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a cart",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "abcdefghijklmnopqrst",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\":\"1234567890\",\n\t\"pizza\":\"medium\",\n\t\"drink\":\"soda, lemonade\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/cart",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a cart",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "abcdefghijklmnopqrst",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/cart?phone=1234567890",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cart"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "1234567890"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a cart",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "abcdefghijklmnopqrst",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\": \"1234567890\",\n    \"pizza\": \"large\",\n    \"toppings\": \"\",\n    \"drink\": \"milk, lemonade\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/cart",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a cart",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "abcdefghijklmnopqrst",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/cart?phone=1234567890",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cart"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "1234567890"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a charge",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "abcdefghijklmnopqrst",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\":\"1234567890\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/charge",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"charge"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

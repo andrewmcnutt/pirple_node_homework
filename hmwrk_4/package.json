@@ -1,0 +1,16 @@
+{
+  "name": "homework_assignment_2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "dotenv": "^6.1.0",
+    "eslint": "^5.11.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create-data-subfolders": "mkdir .data/users && mkdir .data/tokens && mkdir .data/cart"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,18 @@
+<h1>Pizza pie via pizza pay!</h1>
+
+<div class="formWrapper">
+  <form id="menu" action="/api/charge" method="POST">
+    <div class="formError"></div>
+    <h1 id="cartTotal"></h1><br>
+    <div id="cartList"></div><br>
+    <div class="inputWrapper">
+      <div class="inputLabel">Please enter a credit card.</div>
+      <input type="text" id="charge_cc" name="charge_cc" required minlength="16" maxlength="16">
+    </div>
+    <div class="inputWrapper ctaWrapper">
+      <button id="paymeButton" type="submit" class="cta blue">Send Me Food!</button>
+    </div>
+  </form>
+  <h1 id="chargeSuccess">Your order is being processed! Delivered in 30 minutes or your pizza's cold!</h1>
+  <h1 id="chargeFailure">There was an error trying to charge your card. Please go check your credit score.</h1>
+</div>
