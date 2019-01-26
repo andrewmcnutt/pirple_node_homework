@@ -5,8 +5,8 @@
 
 // Dependencies
 const server = require("./lib/server");
+const cli = require("./lib/cli");
 require("dotenv").config();
-// var workers = require("./lib/workers");
 
 // Declare the app
 const app = {};
@@ -16,8 +16,10 @@ app.init = function() {
     // Start the server
     server.init();
 
-    // Start the workers
-    // workers.init();
+    // Start the CLI, but make sure it starts last
+    setTimeout(function(){
+        cli.init();
+    },50);
 };
 
 // Execute
