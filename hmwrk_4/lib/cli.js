@@ -35,13 +35,17 @@ e.on("recent orders", function() {
     cli.responders.recentOrders();
 });
 
-e.on("order lookup", function() {});
+e.on("order lookup", function(str) {
+    cli.responders.orderLookup(str);
+});
 
 e.on("recent sign ups", function() {
     cli.responders.recentSignUps();
 });
 
-e.on("user lookup", function() {});
+e.on("user lookup", function(str) {
+    cli.responders.userLookup(str);
+});
 
 // Responders object
 cli.responders = {};
@@ -247,6 +251,75 @@ cli.responders.recentSignUps = async function() {
             cli.verticalSpace();
         }
     });
+};
+
+// Look up an order by it's file name
+cli.responders.orderLookup = async function(str) {
+    // Get ID from string
+    const arr = str.split("--");
+    const orderId =
+        typeof arr[1] == "string" && arr[1].trim().length == 10
+            ? arr[1].trim()
+            : false;
+    let orderData;
+
+    // If we have an order ID look up the order and print it to the console.
+    if (orderId) {
+        try {
+            orderData = await _data.read("cart", orderId);
+        } catch (error) {
+            console.log("Error: Could not find order with that ID");
+            return;
+        }
+
+        cli.verticalSpace();
+        console.log("Data for order: " + orderId);
+        console.log(orderData);
+        cli.verticalSpace();
+    }
+};
+
+// Look up a user by their email
+cli.responders.userLookup = async function(str) {
+    let userList;
+
+    // Get email from string
+    const arr = str.split("--");
+    const userEmail =
+        typeof arr[1] == "string" && arr[1].trim().length > 1
+            ? arr[1].trim()
+            : false;
+
+    // Return users
+    try {
+        userList = await _data.list("users");
+    } catch (error) {
+        console.log("Error: No users could be found");
+        return;
+    }
+
+    for (let i = 0; i < userList.length; i++) {
+        let userData;
+
+        try {
+            userData = await _data.read("users", userList[i].replace(".json", ""));
+        } catch (error) {
+            console.log("Error: Encountered an error trying to look up a user");
+            return;
+        }
+
+        if (userData.email === userEmail) {
+            cli.verticalSpace();
+            console.log("Data for user: " + userData.phone);
+            console.log(userData);
+            cli.verticalSpace();
+            return;
+        }
+
+        if (i === (userList.length - 1)) {
+            console.log("Error: No user with that email could be found");
+        }
+    }
 };
 
 // Input processor
