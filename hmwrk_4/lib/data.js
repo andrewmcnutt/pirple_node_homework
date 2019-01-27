@@ -142,5 +142,65 @@ lib.delete = function(dir, file) {
     });
 };
 
+// List all the items in a directory
+lib.list = function(dir) {
+    return new Promise(async function(resolve, reject) {
+        try {
+            await fs.readdir(lib.baseDir + dir + "/", function(err, data) {
+                resolve(data);
+            });
+        } catch (err) {
+            reject("Unable to locate any files");
+            return;
+        }
+    });
+};
+
+// Return boolean telling us if a file was updated within the last 24 hours
+lib.recentlyUsedFile = function(dir, file) {
+    return new Promise(async function(resolve, reject) {
+        try {
+            await fs.stat(lib.baseDir + dir + "/" + file, function(err, stats) {
+                let mtime = new Date(util.inspect(stats.mtime));
+                let timeDiff = Date.now() - mtime.getTime();
+                let timeDiffInMinutes = Math.floor(timeDiff / 60000);
+                let isRecent = false;
+
+                if (timeDiffInMinutes <= 1440) {
+                    isRecent = true;
+                }
+
+                resolve(isRecent);
+            });
+        } catch (err) {
+            reject("Unable to locate any file");
+            return;
+        }
+    });
+};
+
+// Return boolean telling us if a file was created within the last 24 hours
+lib.recentlyCreatedFile = function(dir, file) {
+    return new Promise(async function(resolve, reject) {
+        try {
+            await fs.stat(lib.baseDir + dir + "/" + file, function(err, stats) {
+                let birthtime = new Date(util.inspect(stats.mtime));
+                let timeDiff = Date.now() - birthtime.getTime();
+                let timeDiffInMinutes = Math.floor(timeDiff / 60000);
+                let isRecent = false;
+
+                if (timeDiffInMinutes <= 1440) {
+                    isRecent = true;
+                }
+
+                resolve(isRecent);
+            });
+        } catch (err) {
+            reject("Unable to locate any file");
+            return;
+        }
+    });
+};
+
 // Export the data library
 module.exports = lib;

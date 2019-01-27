@@ -31,11 +31,15 @@ e.on("list menu items", function() {
     cli.responders.listMenuItems();
 });
 
-e.on("recent orders", function() {});
+e.on("recent orders", function() {
+    cli.responders.recentOrders();
+});
 
 e.on("order lookup", function() {});
 
-e.on("recent logins", function() {});
+e.on("recent sign ups", function() {
+    cli.responders.recentSignUps();
+});
 
 e.on("user lookup", function() {});
 
@@ -53,7 +57,7 @@ cli.responders.help = function() {
             "Show a list of all orders placed within the last 24 hours",
         "order lookup --{orderId}":
             "Get a specific order using an order id(The users phone)",
-        "recent logins":
+        "recent sign ups":
             "Show a list of all users who have logged in within the last 24 hours.",
         "user lookup --{userId}":
             "Get a specific user using a user id(The users phone)"
@@ -155,6 +159,96 @@ cli.responders.listMenuItems = async function() {
     });
 };
 
+// List recent orders
+cli.responders.recentOrders = async function() {
+    let recentOrdersList;
+
+    // Return orders
+    try {
+        recentOrdersList = await _data.list("cart");
+    } catch (error) {
+        console.log("Error: No orders could be found");
+        return;
+    }
+
+    recentOrdersList.forEach(async function(fileName) {
+        let fileIsRecent;
+        let fileData;
+
+        // Check if file was recently used
+        try {
+            fileIsRecent = await _data.recentlyUsedFile("cart", fileName);
+        } catch (error) {
+            console.log("Error: Could not locate file in path");
+            return;
+        }
+
+        // If the file is recent list it in the console
+        if (fileIsRecent) {
+            try {
+                fileData = await _data.read(
+                    "cart",
+                    fileName.replace(".json", "")
+                );
+            } catch (error) {
+                console.log("Error: Could not read the recent file");
+                return;
+            }
+
+            cli.verticalSpace();
+            console.log("Recent Order: " + fileName.replace(".json", ""));
+            console.log(fileData);
+            cli.verticalSpace();
+        }
+    });
+};
+
+// List recent sign ups
+cli.responders.recentSignUps = async function() {
+    let recentSignUpsList;
+
+    // Return users
+    try {
+        recentSignUpsList = await _data.list("users");
+    } catch (error) {
+        console.log("Error: No users could be found");
+        return;
+    }
+
+    recentSignUpsList.forEach(async function(fileName) {
+        let fileIsRecent;
+        let fileData;
+
+        // Check if file was recently created
+        try {
+            fileIsRecent = await _data.recentlyCreatedFile("users", fileName);
+        } catch (error) {
+            console.log("Error: Could not locate file in path");
+            return;
+        }
+
+        // If the file is recently created list it in the console
+        if (fileIsRecent) {
+            try {
+                fileData = await _data.read(
+                    "users",
+                    fileName.replace(".json", "")
+                );
+            } catch (error) {
+                console.log("Error: Could not read the recent file");
+                return;
+            }
+
+            cli.verticalSpace();
+            console.log(
+                "Recent User Sign Up: " + fileName.replace(".json", "")
+            );
+            console.log(fileData);
+            cli.verticalSpace();
+        }
+    });
+};
+
 // Input processor
 cli.processInput = function(str) {
     str = typeof str == "string" && str.trim().length > 0 ? str.trim() : false;
@@ -167,7 +261,7 @@ cli.processInput = function(str) {
             "list menu items",
             "recent orders",
             "order lookup",
-            "recent logins",
+            "recent sign ups",
             "user lookup"
         ];
 
