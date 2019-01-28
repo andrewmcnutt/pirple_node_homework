@@ -63,8 +63,8 @@ cli.responders.help = function() {
             "Get a specific order using an order id(The users phone)",
         "recent sign ups":
             "Show a list of all users who have logged in within the last 24 hours.",
-        "user lookup --{userId}":
-            "Get a specific user using a user id(The users phone)"
+        "user lookup --{user email}":
+            "Get a specific user using a user email"
     };
 
     // Show a header for the help page that is as wide as the screen
